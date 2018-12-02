@@ -32,16 +32,22 @@ keep dnr dodar
 
 gen fodar=.
 
-save "D:\NK\Input (stuff you generate)\temp\Avlidna_0814_clean.dta", replace
+save "D:\NK\Input (stuff you generate)\initial\death_records_0814.dta", replace
 
 
-use "D:\NK\Input (stuff you generate)\temp\Avlidna_0814_clean.dta", clear
-
-append using "D:\NK\Input (stuff you generate)\temp\Dod_6104_clean.dta"
+use "D:\NK\Input (stuff you generate)\temp\Dod_6104_clean.dta", clear
 
 append using "D:\NK\Input (stuff you generate)\temp\Dod_0507_clean.dta"
 
+append using "D:\NK\Input (stuff you generate)\initial\death_records_0814.dta"
+
 sort dodar dnr
+
+use "D:\NK\Input (stuff you generate)\initial\death_records.dta", clear
+bysort dnr: gen check=_N
+browse if check>1
+drop if check>1
+drop check
 
 save "D:\NK\Input (stuff you generate)\initial\death_records.dta", replace
 
